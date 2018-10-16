@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>超超的js</title>
+	<style>
+		span{
+			font-size：12px;
+			color: #aaa;
+		}
+	</style>
+	<script>
+		var pwd = ''
+		function check(obj){
+			var name = obj.name
+			var value = obj.value
+			var span = obj.nextElementSibling
+			if(name=='user'){
+				if(value==''){
+					span.innerHTML='<font style="color:red">用户名不能为空</font>'
+				}else{
+					if(check_user(value)){
+						span.innerHTML='<font style="color:aaa">以小写字母开头长度为4到12位</font>'
+					}else{
+						span.innerHTML='<font style="color:red">用户名格式不正确</font>'
+					}
+				}
+			}else if(name=='pwd1'){
+				if(value==''){
+					span.innerHTML='<font style="color:red">密码不能为空</font>'
+				}else if(check_pwd1(value)){
+					span.innerHTML='<font style="color:aaa">长度为6到12位</font>'
+					pwd = value
+				}else{
+					span.innerHTML='<font style="color:red">密码格式不对</font>'
+				}
+			}else if(name=='pwd2'){
+				if(check_pwd2(value)){
+					span.innerHTML='<font style="color:aaa">两次密码必须一致</font>'
+				}else{
+					span.innerHTML='<font style="color:red">两次密码不一致</font>'
+				}
+			}else if(name=='tele'){
+
+			}else if(name=='email'){
+
+			}else{
+
+			}
+		}
+		// 检测用户名
+		function check_user(value) {
+			if(/^[a-z][\w]{3,12}/.test(value)){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		// 检测密码
+		function check_pwd1(value) {
+			if(/[a-zA-Z0-9_]{6,12}/.test(value)){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		// 确认密码
+		function check_pwd2(value){
+			if(value==pwd && value!=''){
+				return true
+			}else{
+				return false
+			}
+		}
+	</script>
+</head>
+<body>
+	<ul>
+		<li>
+			用户名:<input type="text" name="user" 
+			onblur="check(this)">
+			<span>以小写字母开头长度为4到12位</span>
+		</li>
+		<li>
+			设置密码:<input type="password" name="pwd1"
+			onblur="check(this)">
+			<span>长度为6到12位</span>
+		</li>
+		<li>
+			确认密码:
+			<input type="password" name="pwd2"
+			onblur="check(this)">
+			<span>两次密码必须一致</span>
+		</li>
+		<li>
+			手机号码：
+			<input type="telephone" name="tele"
+			onblur="check(this)">
+		</li>
+		<li>
+			邮箱：
+			<input type="email" name="email"
+			onblur="check(this)">
+			<span>请输入合法的邮箱格式</span>
+		</li>
+		<li>
+			<input type="submit" value="注册">
+		</li>
+	</ul>
+</body>
+</html>

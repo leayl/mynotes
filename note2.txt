@@ -1,0 +1,1410 @@
+函数 function
+	什么是函数：
+		函数是可以重复执行的语句块，可以重复使用
+	作用：
+		1.用于封装语句块，提高代码的重用性
+		2.定义用户级别的函数
+	函数定义（创建）语句 def 语句的语法：
+		def 函数名（形参列表）
+			语句块
+
+		def fn():
+			pass
+		v1 = fn   #v1绑定的函数 
+		v2 = fn()  #v2绑定None
+
+	说明：
+		1.函数的名字就是语句块的名称
+		2.函数名的命名规则与变量名相同（函数名必须为标识符）
+		3.函数有自己的名字空间，在函数外部不可以访问函数内部的变量，在函数内部可以访问函数外部的变量，通常让函数处理外部数据需要用参数给函数传入一些数据
+		4.函数的参数列表可以为空
+		5.语句部分不能为空，如果为空需要填充pass语句
+函数的调用：
+	函数名(实际调用传递参数列表)
+		注：实际调用传递参数列表称为实参
+	说明：
+		函数调用是一个表达式
+		如果没有return语句，此函数执行完毕后返回None对象
+		如果函数需要返回其他的对象，需要用return语句
+return语句
+	语法：
+		return []
+作用：
+	用于函数中，结束当前函数的执行，返回到调用该函数的地方，同时返回一个对象的引用关系
+说明：
+	1.return语句后跟的表达式可以省略，省略后相当于 return None
+	2.如果函数没有return语句，则函数执行完最后一条语句后返回None(相关与在最后加了一条return None语句)
+	3.函数调用一定会返回一个对象的引用 
+
+python函数的参数传递
+	传递方式
+		位置传递
+			序列传递
+		关键字传参
+			字典关键字传参
+    位置传参：
+    	实参的对应关系与形参的对应关系是按位置来对应的
+    	示意：
+    		def myfun(a,b,c):
+    			pass
+
+    		myfun(1,2,3)
+    	说明：
+    		实参和形参通过位置进行传递的匹配
+    		实参与形参个数相必须相同
+    序列传参：
+    	序列传参是指在函数调用过程中，用*将序列拆解后按位置传参的方式进行参数传递
+    	示例：
+    	def myfun(a,b,c):
+    		pass
+    	s = [1,2,3]
+    	myfun(*s)  # 用*将s拆开
+    关键字传参：
+    	关键字传参是指传参时，按着形参给的名称给形参赋值，实参和形参按名称进行匹配
+    	示例：
+    		def myfun(a,b,c):
+    			pass
+
+    		myfun(b=22,c=33,a=11)  #等同于myfun(11,22,33),myfun(c=33,a=11,b=22)
+    	说明：
+    		形参和实参可以不按位置匹配
+    字典关键字传参
+    	是指实参为字典，将字典用**拆解后进行关键字传参
+    	示例：
+    		def myfun(a,b,c):
+    			pass
+    		d = {'c':3,'b':2,'a':1}
+    		myfun(**d)
+    	说明：
+    		字典的键名必须和形参名相同
+    		字典键名必须为字符串
+    		字典的键名要在形参中存在
+    函数的综合传参
+    	函数传参方式，在能确定形参能唯一匹配到相应实参的情况下可以任意组合
+    	示例：
+    		def myfun(a,b,c):
+    			pass
+    		myfun(100,*[200,300])   #正确
+    		myfun(*'ab',c=300)   #正确
+    		myfun(100,c=300,b=200)   #正确
+    		myfun(1,**{'c':3,'b',2})   #正确
+    		myfun(**{'c':3,'b',2},a = 1)   #正确
+    		myfun(b=2,c=3,1)   #错误，1的位置不确定
+    	说明：	
+    		传参时，先位置传参，后关键字传参
+
+-----------以下为函数的形参（如何接收实参）-----------------
+函数的缺省参数
+	语法：
+		def 函数名(形参名1=默认实参1，形参名2=默认实参2，...)：
+	示例：
+		def info(name,age=1,address='未填写')：
+			print(name,"今年",age,'岁','家庭住址：',address)
+
+		info('tarena',25)
+		info('小李',22,'朝阳区')
+		info('小明')
+	说明：
+		1.缺省参数必须自右至左依次存在，如果有一个缺省参数，则其右侧的所有参数都必须有缺省参数
+		如：
+			def test(a, b=10, c=20):
+				pass
+			def test(a, b=10, c):   #错误的写法
+				pass
+		2.缺省参数可以有0个或多个，甚至全部都有缺省参数
+
+函数的形参定义方式：
+	位置形参
+	*元组形参
+	命名关键字形参
+	**字典形参
+
+	位置形参：
+		语法：
+			def 函数名(形参名1，形参名2，...)：
+				语句块
+
+	*元组形参：
+		语法：
+			def 函数名(*元组形参名)：
+				语句
+		作用：
+			收集多余的位置传参
+		说明：
+			元组形参通常用：'args'
+		示例：
+		def func(*args):
+    		print('参数个数：',len(args))
+    		print('args=',args)
+
+		func(1,2,3,4)
+		func('hello','world',1,2,3)
+
+	命名关键字形参
+		语法：
+			def 函数名(*, 命名关键字形参)：
+				语句
+		 或
+			def 函数名(*args, 命名关键字形参)：
+				语句		 
+		作用：
+			所有的参数都必须用关键字传参或用字典关键字传参
+		示例:
+			def fn(*,d,e):
+    			print('d=',d)
+    			print('e=',e)
+
+			fn(d=100,e=200)  #合法调用
+			fn(100,200)　　　　#不合法调用
+
+			def fm(*args,b,c):
+				print(args)
+				print('b=',b)
+    			print('c=',c)
+
+    		fm(1,2,3,b=4,c=5)   #合法调用
+    		fm(1,2,3,b=4,5)   #不合法调用
+    		fm(1,2,3,**{b:4,c:5})   #合法调用
+
+    **字典传参：
+    	语法：
+    		def 函数名(**字典形参名)：
+    			语句
+    	作用：
+    		收集多余的关键字传参
+    	说明：
+    		通常字典形参名定为kwargs
+    	示例：
+    		def func(**kwargs):
+			    print('关键字个数是：',len(kwargs))
+			    print('kwargs=',kwargs)
+
+			func(name='tarena',age=15)
+
+函数的参数说明：
+	缺省参数，位置形参，*元组形参，命名关键字形参和**字典形参可以混合使用
+函数参数自左至右的顺序为：
+	位置形参
+	*元组形参
+	命名关键字形参
+	**字典形参
+综合示例：
+	def f1(a,b,*args,c,**kwargs):
+		pass
+	f1(1, 2, 3, 4, d=6, c=5, e=7)
+	f1(*'hello', d=6, **{'c':5, 'e':7})
+
+函数的不定长参数
+	def fn(*args,**kwargs):
+		pass
+	#可以接收任意的位置传参和关键字传参（参数位置需按位置传参在前的顺序排列）
+
+
+
+
+全局变量和局部变量
+
+局部变量：
+	定义在函数内部的变量称为局部变量（函数的形参也是局部变量）
+	局部变量只能在函数内部使用
+	局部变量在函数调用时才能被创建，在函数调用之后会自动销毁
+说明：
+	1.在函数内首次对变量赋值时创建局部变量，再次赋值是局部变量的绑定关系
+	2.在函数内部的赋值语句不会对全局变量造成影响
+	3.局部变量只能在其被声明的函数内部访问，而全局变量可以再整个模块范围内访问
+
+全局变量：
+	定义在函数外部，模块内部的变量称为全局变量
+	全局变量。所有的函数都可以直接访问（但函数内部不能直接对其赋值）
+
+globals 和 locals函数
+	globals() 返回当前全局作用域内的变量字典
+	locals() 返回当前局部作用域内变量的字典
+
+	示例：
+	a = 1
+	b = 2
+	c = 3
+	def f1(c,d):
+		e = 300
+		print('locals()返回',locals())  #{'d': 2, 'c': 1, 'e':300}
+		print('globals()返回',globals())
+		print(globals()[c])--->得到全局变量的值
+    f1(100,200)
+函数变量
+	函数名是变量，它在创建时绑定了一个函数
+	示例1：
+		 def f1():
+		 	print('f1被调用')
+
+		 fx = f1
+		 fx()   #等同于f1()
+	示例2：
+		def f1():
+			print('hello')
+		def f2():
+			print('world')
+
+		f1,f2 = f2,f1
+		f1()     #'world'
+		f2()     #'hello'
+
+一个函数可以作为另一个函数的参数传递
+	示例1：
+		def f1():
+    		print('hello')
+		def f2():
+    		print('world')  
+		def fx(fn): 
+   		 	print(fn)
+   		 	fn()     #调用fn相应的实际参数函数
+
+		fx(f1) #<function f1 at 0x7febd606cf28>
+		       #hello
+
+		fx(f2) #<function f1 at 0x7febd606cf28>
+		       #hello
+	示例2：
+		def fx(a,fn):
+    		return fn(a)
+
+		L = [2,3,4,5,6]
+		print('最大值是：',fx(L,max))   #6
+		print('最小值是：',fx(L,min))   #2
+		print('和是：',fx(L,sum))       #20
+
+函数可以返回另一个函数(即另一个函数可以返回一个函数)
+示例：
+	def get_fx():
+	    s = input('请输入您要做的操作：(求最大，求最小，求和)')
+ 	    if s == '求最大':
+  	    	return max
+  		elif s == '求最小':
+  	    	return min
+  		elif s == '求和':
+     		return sum
+
+	L = [2,4,6,8,10]
+	print(L)
+	f1 = get_fx()
+	print(f1(L))
+
+函数的嵌套定义：
+	函数的嵌套定义是指在一个函数里用def语句来创建其他函数
+	示例：
+		def fn_outer():
+			print('fn_outer被调用')
+			def fn_inner():
+				print('fn_inner被调用')
+			fn_inner()
+			fn_inner()
+			print('fn_inner调用结束')
+		fn_outer()
+
+python作用域
+	作用域也叫名字空间，是访问变量时，查找变量名的范围空间
+
+python的四个作用域 LEGB
+	局部作用域    Local function
+	外部嵌套函数作用域 Enclosing Function Locals
+	函数定义所在模块(文件)的作用域 Global (Moudle)
+	python内置模块的作用域 Builtin 
+
+	变量名的查找规则
+		L-->E-->G-->B
+	    在默认情况下，对变量名的赋值会创建或改变本作用域内的变量
+
+global语句
+	作用：
+		1.告诉解释器，global语句声明的一个或多个变量的作用域为模块级的作用域，也称作全局变量
+		2.全局声明(global)将赋值变量映射到模块内部的作用域
+	语法：
+		global 变量1 变量2，...
+	示例：
+		v = 100
+		def fn():
+			global v
+			v = 200
+		fn()
+		print(v)  #200
+	说明：
+		1.全局变量如果要在函数内部被复制，则必须经过全局声明(否则会被认为是局部变量)
+		2.全局变量在函数内部不经过声明就可以直接访问
+		3.不能先声明局部额变量，再用global声明为全局变量，此做法不符合规则
+		4.global变量列表里的变量不能出现在此作用域内形参列表里
+
+nonlocal语句
+	作用：
+		告诉解释器nonlocal声明的变量不是局部变量，也不是全局变量，而是外部嵌套函数内的变量
+	语法：
+		nonlocal 变量名1 变量名2，...
+	示例：
+		var = 100
+		def f1():
+    		var = 200
+    		print('f1里的var=',var)  #200
+    		def f2():
+     		   nonlocal var
+     		   var = 300
+     		   print('f2里的var=',var) 
+    		f2()                          #300
+    		print('f2调用结束后的var=',var)   #300
+
+		f1()
+		print('全局变量var=',var)      #100
+	说明：
+		1.nonlocal语句只能在被嵌套函数的内部使用
+		2.访问nonlocal变量将对外部嵌套函数的作用域变量进行操作
+		3.当有两层或两层以上的函数嵌套时，访问nonlocal变量只对最近一层的变量进行操作
+		4.nonlocal语句的变量列表里的变量名，不能出现在此函数的形参列表中
+
+lambda表达式(又称匿名函数)
+	作用：
+		创建一个匿名函数对象
+		同def类似，但不提供函数名
+	语法：
+		lambda [参数1,参数2,...]: 表达式
+		[]内的内容可以省略
+	示例：
+		def myadd(x,y):
+			return x + y
+		#以上函数可以改写为：
+		myadd = lambda x, y: x + y
+		print('2+3='，myadd(2, 3))
+	说明：
+		1.lambda只是一个表达式，它用来创建一个函数对象
+		2.当lambda表达式调用时，先执行冒号后的表达式，并返回表达式的结果的引用
+		3.lambda表达式创建的函数只能包含一条'表达式'
+		4.lambda比函数简单，且可以随时创建和销毁，有利于减少程序的偶合度
+
+eval() 和exec()函数
+eval()函数
+	格式：
+		eval(source, globals=None, locals=None)
+	作用：
+		把一个字符串当成一个表达式来执行，返回表达式执行后的结果
+	示例：
+		x = 100
+		y = 200 
+		a = eval('x+y')  #相当于a = x + y
+		print(a)         #300
+
+		L = eval('list(range(10))')
+		print(L) #[0,1,2,3,4,5,6,7,8,9]
+
+exec()函数
+	作用：
+		把一个字符串当成程序来执行
+	格式：
+		exec(source,globals=None,locals=None)
+	示例：
+		x = 100
+		y = 200
+		s = "z = x + y;print(z);del z;print('删除成功')"
+		exec(s) # 执行s绑定的语句
+eval()和exec()的两个参数globals和locals
+	此两个参数是用来设置'表达式'或'程序'运行的全局变量和局部变量
+		示例：
+			x = 100 
+			y = 200
+			s = 'print(x, y, x + y)'
+			exec(s) # 100 200 300
+			exec(s, {'x':10,'y':20})  #10 20 30
+			exec(s, {'x':10},{'x':1,'y':2})  #1 2 3
+			exec(s, {'x':10},{'y':2})  #10 2 12
+
+
+
+
+
+
+函数式编程
+	函数式编程是指用一系列函数解决问题，
+函数是一等公民
+	函数本身可以赋值给变量，赋值后变量绑定函数
+	允许将函数本身作为参数传入另一个函数
+	允许返回一个函数
+
+函数的可重入性：
+	可重入是指一个函数传的参数一定，则结果必须一定
+	要求：
+		def定义的函数不要访问除局部变量以外的变量
+	示例：
+	#以下是不可重入的函数
+		y = 200
+		def myadd(x):
+			return x + y
+		print(myadd(10))   #210
+		y = 300
+		print(myadd(10))   #310
+	#以下是可重入的函数
+		def myadd(x, y):
+			return x + y
+		print(myadd(10, 30))   #40
+
+高阶函数  High Order Function
+	什么是高阶函数：
+		满足下列任意一个条件的函数即为高阶函数：
+			1.函数接收一个或多个函数作为参数传入
+			2.函数返回一个函数
+	python中内建（Bulitins）的高阶函数
+		map  filter  sorted
+	map函数：
+		map(fun, *iterables)用函数和可迭代对象中的每一个元素作为参数计算出新的可迭代对象。当最短的一个可迭代对象不再提供数据时，此可迭代对象生成结束
+
+		示例：
+			def pow2(x):
+				return x**2
+			for x in map(pow2, range(1, 10)):
+				print(x)  #1 4 9...81
+
+			for x in map(pow, range(1, 10), range(4, 0, -1)):
+    			print(x)  #1 8 9 4
+
+			for x in map(pow, [2, 3, 4, 5], [4, 3, 2, 1],range(5, 10)):
+    			print(x)  #1 3 2 5
+
+    filter函数：
+    	格式：
+    		filter(func,iterable)
+    	作用：
+    		筛选可迭代对象iterable中的数据，返回一个可迭代对象，此可迭代对象将对iterable进行筛选
+    	说明：
+    		函数func将对每个元素进行求值，返回False则将此数据丢弃，返回True则保留此数据
+    	示例：
+    		def isodd(x):
+    			return x % 2 == 1
+    		for x in filter(isodd, range(10)):
+    			print(x)
+    		even = [x for x in filter(lambda x: x%2==0, range(10))]
+
+	sorted 函数
+		作用：
+			将原可迭代对象的数据进行排序，生成排序后的列表
+		格式：
+			sorted(iterable, key=None, reverse=False)
+		说明：
+			iterable  可迭代对象
+			key 函数是用来提供一个参考值，这个值将作为排序的一句
+			reverse 标志用来设置是否降序排序
+		示例：
+			L = [5, -2, -4, 0, 3, 1]
+			L2 = sorted(L)  # L2 = [-4, -2, 0, 1, 3, 5]
+			L3 = sorted(L, reverse=True)  # L3 = [5, 3, 1, 0, -2, -4]
+			L4 = sorted(L, key=abs)  # L4 = [5, -4, 3, -2, 1, 0]
+
+
+递归函数(recursion)
+	函数直接或间接地调用自身
+	递归说明：
+		递归一定要控制递归的层数，当符合某一条件时要终止递归
+		几乎所有的递归都能用while来代替
+
+	控制递归的示例：
+		def fx(n):
+			print('递归进入第%d层' % n)
+			if n == 3：                  
+				return
+			fx(n + 1)
+			print('递归结束')
+		fx(1)
+		print('程序结束')    #递归进入第1层
+							 #递归进入第2层
+							 #递归进入第3层
+							 #递归退出第2层
+							 #递归退出第1层
+							 #程序结束
+	递归的优缺点：
+		优点：
+			递归可以把问题简单化，让思路更清晰，代码更简洁
+		缺点：
+			递归因系统环境影响大，当递归深度太大时，可能得不到预期结果
+
+	递归函数的实现方法：
+		先假设函数已经实现
+		示例：
+			def myfac(x):
+			    if x == 1:
+			        return 1
+			    return x * myfac(x - 1)  #阶乘
+			print(myfac(5))
+
+
+闭包 closure
+	将内嵌函数的语句和这些函数的执行环境打包在一起，得到的对象称为闭包
+闭包必须满足的三个条件：
+	1.必须有一个内嵌函数
+	2.内嵌函数必须引用外部函数的变量
+	3.外部函数的返回值必须是内嵌函数
+示例：day0516/exercises/3_closure                                                                            
+    def make_power(x):
+	    def fx(arg):
+	        return arg ** x
+	    return fx
+	pow2 = make_power(2) #平方
+	print(pow2(3)) 
+	pow3 = make_power(3) #立方
+	print(pow3(3))
+
+
+
+装饰器decorators(专业提高篇)
+	函数装饰器是指装饰的是一个函数，传入的是一个函数，返回的也是一个函数的函数
+	函数装饰器语法：
+		def 装饰器函数名(参数)：
+			语句块
+			return 函数对象
+
+		被装饰函数的语法：
+			@装饰器函数名
+			def 函数名(形参列表)：
+				语句块
+
+		示例：见day0517/code/1_decorators.py
+			#定义一个装饰器函数
+			def mydeco(fn):
+			    def fx():
+			        print('+++++++++++')
+			        fn()
+			        print('-----------')
+			    return fx
+			#定义函数并装饰
+			@mydeco  #等同于myfunc = mydeco(myfunc)
+			def myfunc():
+			    print('myfunc被调用') 
+			myfunc()
+
+函数的文档字符串
+	函数内部，第一个没有赋值给任何变量的字符串为文档字符串：
+	语法：
+		def 函数名(形参列表)：
+			'''函数的文档字符串'''
+			函数语句块
+	示例：
+		def cba():
+			'这是一块文档字符串'
+			pass
+		>>>help(cba)
+
+函数的__doc__属性
+	__doc__属性用于绑定该函数的文档字符串
+	示例：
+		def fx(a, b):
+			'''这是一行的文档字符串
+			这是第二行...'''
+
+		print(fx.__doc__) #显示文档字符串
+
+函数的__name__属性：
+
+	__name__属性用于绑定函数名的字符串
+	示例：
+		def fx():
+			pass
+		f1 = fx
+		print(f1.__name__)
+
+函数定义语句(def语句的语法)
+	[@装饰器名1]
+	[@装饰器名2]
+	...
+	def 函数名([位置形参]，[*[元组形参名]]，[命名关键字形参], [**字典形参])：
+		'''文档字符串'''
+		语句块
+	注：[]里的内容代表可省略
+
+面试题：
+L = [1, 2, 3]
+def f(n, lst=[]):
+	lst.append(n)
+	print(lst)
+f(4, L)    #[1, 2, 3, 4]
+f(5, L)    #[1, 2, 3, 4, 5]
+f(100)     #[100]
+f(200)     #[100,200]
+说明：
+***函数的缺省参数为可变数据类型时，一经调用即创建，不会每次调用都创建，当实参缺省时即调用（默认参数绑定在函数对象内部，且随函数的生命一直存在）
+解决办法：
+L = [1, 2, 3]
+def f(n, lst=None):
+	if lst is None:
+		lst = []
+	lst.append(n)
+	print(lst)
+
+
+
+
+
+
+
+
+模块 Moudule
+	什么是模块：
+		模块是一个包含有一系列数据，函数，类等组成的程序组
+		模块是一个文件，模块文件名常以.py结尾
+	作用：
+		让一些相关的数据，函数，类等有逻辑地组织在一起，使逻辑更加清晰
+		模块中的数据，函数和类等可以提供给其他的模块或程序使用
+	模块的分类：
+		1.内置模块(bulitins)，在解释器的内部可以直接使用
+		2.标准库模块，安装python时已安装且可以直接使用
+		3.第三方模块(通常为开源)，需要自己安装
+		4.用户自己的模块(可以作为其他人的第三方模块) 
+
+模块的导入语句 
+
+import 语句
+	语法：
+		import 模块名1[as 模块新名1][,模块名2 [as 模块新名2]]，...
+
+	示例：
+		#导入数学模块
+		import math
+		#导入系统模块sys和os模块
+		import sys, os
+	作用
+		将某模块整体导入到当前模块
+	用法
+		模块.属性名
+dir(obj)  函数返回模块所有属性的字符串列表
+help(obj) 可以查看模块相关的文档字符串
+
+from import语句
+	语法
+		from 模块名 import 模块属性名1[as 属性新名1][,模块属性名2[as 模块新名2]]
+	作用：
+		将某模块内的一个或多个属性导入到当前模块的作用域
+	示例：
+		from math import pi
+		from math import pow, sqrt
+		from math import factorial as fac
+from import *语句
+	语法
+		from 模块名 import *
+	作用：
+		将某模块的所有属性都导入到当前模块
+	示例：
+		from math import *
+dir函数：
+	dir([对象]) 返回一个字符串列表
+	作用：
+		1.如果没有参数调用，则返回当前作用域内的所有变量的列表
+		2.如果给定一个对象作为参数，则返回这个对象的所有变量的列表
+			1.对于一个模块，返回这个模块的全部属性
+			2.对于一个类对象，返回类对象的所有变量，亲递归基类对象的所有变量
+			3.对于其他变量，返回所有变量，类变量，基类变量
+
+数学模块math
+	模块名math
+
+时间模块 time
+	此模块提供了时间相关的函数，且一直可用
+		示例：
+		import time
+		print('开始打印')
+		time.sleep(10)
+		print('程序结束')
+
+ 
+
+ 系统模块sys
+ 	此模块全部是运行时系统相关的信息
+ 	见yl/day0518/code/1_sys.py
+ 	sys模块的变量
+	变量 	描述
+	sys.path 	模块搜索路径 path[0] 是当前脚本程序的路径名，否则为 ''
+	sys.modules 	已加载模块的字典
+	sys.version 	版本信息字符串
+	sys.version_info 	版本信息的命名元组
+	sys.platform 	操作系统平台名称信息
+	sys.argv 	命令行参数 argv[0] 代表当前脚本程序路径名
+	sys.copyright 	获得Python版权相关的信息
+	sys.builtin_module_names 	获得Python内建模块的名称（字符串元组）
+	标准输入输出时会用到 	
+	sys.stdin 	标准输入文件对象，多用于input()
+	sys.stdout 	标准输出文件对象,多用于print()
+	sys.stderr 	标准错误输出文件对象, 用于输出错误信息
+	sys模块的方法
+	函数名 	描述
+	sys.exit([arg]) 	退出程序，正常退出时sys.exit(0)
+	sys.getrecursionlimit() 	
+	sys.getrecursionlimit() 	得到递归嵌套层次限制（栈的深度）
+	sys.setrecursionlimit(n) 	得到和修改递归嵌套层次限制（栈的深度）
+
+
+
+
+自定义模块
+	示例见yl/day1508/code/mymod1.py #用户自定义模块
+	示例见yl/day1508/code/test__mymod.py #测试自定义模块
+
+	自定义的模块命名必须符合‘标识符’的命名规则（同变量名）
+
+模块有各自独立的作用域
+
+模块化编程的优点：
+	1.有利于多人合作开发
+	2.使代码更易于维护
+	3.提高代码的复用率
+	4.有利于解决变量名冲突的问题
+
+import语句搜索模块的路径顺序
+	1.搜索程序运行时的路径（当前路径）
+	2.sys.path提供的路径
+	3.搜索内置模块
+
+	sys.path是一个存储模块搜序路径的列表
+	1)可以把自定义的模块放在相应的路径下可以导入
+	2)可以把自己模块的路径追加在sys.path列表中
+
+模块的加载过程：
+	1.在导入模块时，模块的所有语句会执行
+	2.如果一个模块已经导入，则再次导入时不会重新执行模块内的语句
+
+模块的重新加载：
+	import mymod
+	import imp
+	imp.reload(mymod) #重新加载mymod模块
+
+模块被导入和执行的过程：
+	1.先搜索相关的路径找模块(.py)
+	2.判断是否有此模块对应的.pyc文件，如果存在pyc文件且比py文件新，则直接加载.pyc文件
+	3.否则用.py文件生成.pyc文件后再进行加载
+
+
+pyc模块的编译文件
+            编译         解释执行
+	mymod.py---->mymod.pyc----->python3
+
+模块的属性
+	属性的实质是模块内的全局变量
+
+模块内预置的属性
+	__doc__属性：
+		作用：
+			用来绑定模块的的文档字符串
+		模块内第一个没有给任何变量赋值的字符串为文档字符串
+		示例：
+			'''这是文档字符串的标题
+
+			这是文档字符串的内容
+			'''
+			def myfun():
+			    pass
+			print(__doc__)  #lalala，这是一串字符
+
+	__file__属性
+		__file__绑定模块对应的文档路径名
+		1.对于内建模块，不绑定路径(没有__file__属性)
+		1.对于其他模块，绑定路径名的字符串
+
+	__name__属性
+		此属性用来记录模块的自身名字
+		作用：
+			1.记录模块名
+			2.用来判断是否为主模块(最先运行的模块)
+		说明：
+			当此模块为主模块时，__name__绑定'__main__'
+			当此模块不为主模块时，此属性绑定模块名
+
+模块的__all__列表
+	模块中的__all__列表是一个用来存放可导出属性的字符串列表
+	作用：
+		当用from import*语句导入时，只导入__all__列表内的属性
+	示例：
+	__all__=['f1','f2']  #限制用from import*时只导入f1,f2
+	def f1():
+		pass
+	def f2():
+		pass
+	def f3():
+		pass
+
+模块的隐藏属性
+	模块中以'_'开头的属性，在form import *
+	语句导入时，将不被导入，通常称这些属性为隐藏属性
+
+
+
+
+
+
+
+
+随机模块 random
+	作用：
+		用于模拟或生成随机输出的模块
+	见:随机模块random.html
+	R.random() 	返回一个[0, 1) 之间的随机实数
+	R.uniform(a,b) 	返回[a,b) 区间内的随机实数
+	R.randrange([start,] stop[, step]) 	返回range(start,stop,step)中的随机数
+	R.choice(seq) 	从序列中返回随意元素
+	R.shuffle(seq[, random]) 	随机指定序列的顺序(乱序序列）
+	R.sample(seq,n) 	从序列中选择n个随机且不重复的元素
+	R.getrandbits(nbit) 	以长整型的形式返回用nbit位来表示的随机数
+	R.seed(a=None) 	用给定的数a设置随机种子,不给参数a则用当前时间设置随机种子
+
+包(模块包) package
+	包是将模块以文件夹的组织像是进行分组管理的方法
+	作用：
+		将一系列模块进行分类管理，有利于防止命名冲突
+		可以在需要时将在一个或部分模块而不是全部模块
+	示例：
+		mypack/
+			__init__.py #每个包里必须有这个文件
+			menu.py
+			games.py
+				__init__.py
+				contra.py
+				supermario.py
+				tanks.py
+			office/
+				__init__.py
+				excel.py
+				word.py
+	__init__.py文件
+		常规包中必须存在的文件
+		__init__.py会在包加载时被自动调用
+
+		作用：
+			编写此包的内容
+			在内部填写文档字符串
+			在__init__.py内可以加载此包所依赖的以下其他模块
+	__init__.py内的__all__列表
+	作用：
+		用来记录此包有哪些子包或模块在用from 包 import*语句导入时是否被调导入
+	说明：
+		__all__列表只对from import*语句起作用
+
+包的导入：
+	用三条import语句可以导入包(同模块的导入规则)
+
+	import 包名[as 包别名]
+	import 包名.模块名 [as 模块新名]
+	import 包名.子包名.模块名 
+
+	from 包名 import 模块名 [as 模块新名]
+	from 包名.子包名 import 模块名 [as 模块新名] 
+	from 包名.子包名.模块名 import 属性名 [as 属性新名] 
+
+	from 包名 import *
+	from 包名.模块名  import *
+
+
+
+
+包的相对导入
+	包的相对导入是指包内模块的相互导入
+	语法：
+		from 相对路径包或模块 import 属性或模块名
+		或
+		from 相对路径包或模块 import  *
+	相对路径：
+		. 代表当前目录
+		.. 代表上一级目录
+		... 代表上二级目录
+		.... 以此类推      
+		注：相对导入时不能超出包的外部
+		示例：
+		def play():
+			print('玩contra')
+		print('contra模块被加载')
+		def gameoer():
+			from ..menu import show_menu  #相对导入
+			show_menu()
+
+			from .tanks import play
+			play()
+
+包的加载路径
+	同模块的加载路径相同
+		1.当前文件夹
+		2.sys.path给出的路径 
+
+
+
+
+
+
+
+
+
+
+
+异常 exception
+
+什么是错误
+	错误是指由于逻辑或语句导致一个程序无法正常执行的问题
+	特点：
+		有些错误是无法预知的
+什么是异常
+	异常是程序出错时表示的一种状态
+	当异常发生时，程序不会再向下执行，而转去调用此函数的地方待处理此错误并回复为正常状态
+异常的作用：
+	1.通知上层调用者有错误产生需要处理
+	2.用作信号
+
+try语句的两种语法
+	try-except语句
+	try-finally语句
+
+try-except语句
+	语法：
+	try:
+		可能触发异常的语句
+	except 错误类型1 [as 变量1]：
+		异常处理语句1
+	except 错误类型2 [as 变量2]：
+		异常处理语句2
+	except (错误类型3,错误类型4,...) [as 变量3]：
+		异常处理语句3
+	...
+	except；
+		异常处理语句other
+	else:
+		未发生异常时执行的语句
+	finally:
+		最终执行语句
+作用：
+	尝试捕获异常，将程序转为正常状态并继续执行
+
+语法说明：
+	as子句是用于绑定错误对象的变量，可以省略不写
+	except子句可以有一个或多个，但至少一个
+	else子句最多只能有一个，也可以省略不写
+	finally子句最多只能有一个，也可以省略不写
+
+示例：
+def div_apple(n):
+	print('%d个苹果您想分给几个人？' % n)
+	s = input('请输入人数:')
+	cnt = int(s) #可能触发ValueError错误异常
+	result = n / cnt #可能触发ZeroDivisionError错误异常
+	print('每个人分了',result,'个苹果')
+
+# 以下是调用者
+# 用try_except语句来捕获并处理ValueError类型的错误
+try:
+    print('开始分苹果')
+    div_apple(10)
+    print('分苹果完成')
+except ValueError:
+    print('div_apple内出现了ValueError错误，已处理')
+
+print('程序正常退出')
+
+
+
+try-finally语句
+	语法：
+		try：
+			可能触发异常的语句
+		finally：
+			最终语句
+	说明：
+		finally子句不可省略
+		一定不存在except子句
+	作用：
+		通常用try-finally语句来做触发异常时必须要处理的事情，无论异常是否发生，finally子句都会被执行
+	注：
+		try-finally语句不会改变程序的(正常/异常)状态
+
+	示例：
+		def fry_egg():
+		    try:
+		        print('打开天然气点燃')
+		        count = int(input('请输入鸡蛋个数：'))
+		        print('煎蛋完成，共剪了%d个鸡蛋' % count)
+		    finally:
+		        print('关闭天然气')  #必须执行的命令
+
+		try:
+		    fry_egg()
+		except:
+		    print('程序已转为正常状态')
+
+
+raise语句
+	作用：
+		触发一个错误，让程序进入异常状态
+	语法:
+		raise 异常类型
+		或
+		raise 异常对象
+	
+
+assert语句(断言语句)
+	语法：
+		assert 真值表达式，错误数据(通常是字符串)
+	作用：
+		当真值表达式为False时，用错误数据创建一个AssertError类型的错误，并进入异常状态
+	类似于：
+		if 真值表达式==False
+			raise AssertionError(错误数据)
+
+小结：
+	接收错误消息：
+		try-except
+	做必须要处理的事情的语句：
+		try-finally
+	发错误消息的语句：
+		raise 语句
+		assert 语句
+
+为什么要用异常处理机制
+	在程序调用层数较深时，向主调函数传递错误信息需要用return语句层层传递比较麻烦那，所以用异常处理机制
+
+
+
+
+
+
+
+
+
+
+迭代器 iterator和生成器 generator
+
+什么是迭代器
+	迭代器是指用iter(可迭代对象)函数返回的对象(实例)
+	迭代器可以用next(it)函数获取的迭代对象的数据
+
+迭代器函数
+	iter(iterable)从可迭代对象中返回一个迭代器，iterable必须是一个能够提供迭代器的可迭代对象
+	next(iterable)从迭代器itreator中获取下一条记录，如果无法获取下一条记录，则触发StopIteration异常
+
+说明：
+	迭代器是访问可迭代对象的一种方式
+	迭代器只能向前取值，不会后退
+	用iter函数可以返回一个可迭代对象的迭代器 
+
+迭代器的用途
+	迭代器对象能用next函数获取下一个元素
+示例：
+	# 用while循环语句来访问如下列表
+	L = [2, 3, 4, 5]
+	it = iter(L)
+	while True:
+	    try:
+	        print(next(it))
+	    except StopIteration:
+	        print('停止迭代')
+	        break
+
+生成器 Generator
+什么是生成器
+	生成器是能够动态提供数据的对象，生成器也可以是可迭代对象(实例)
+生成器有两种
+	生成器函数
+	生成器表达式
+生成器函数定义
+	含有yield语句的函数生成器函数，此函数被调用时将返回一个生成器对象，注：yield翻译为产生或生成
+yield语句
+	语法：
+		yield 表达式
+	说明：
+		yield用于def函数中，目的是将此函数作为生成器函数使用
+		yield用来生成数据，供迭代器next(it)函数使用
+	示例：
+	def myyield():
+	    '''此函数为生成器函数'''
+	    print('即将生成2')
+	    yield 2
+	    print('即将生成3')
+	    yield 3
+	    print('即将生成4')
+	    yield 4
+
+	gen = myyield() #绑定生成器
+	it = iter(gen)  #绑定迭代器 
+	next(it)   #打印'即将生成2'，返回2
+	next(it)   #打印'即将生成3'，返回3
+	next(it)   #打印'即将生成4'，返回4
+生成器函数说明：
+	生成器函数的调用将返回一个生成器对象，生成器对象是一个可迭代对象
+	在生成器函数调用return时会生成一个StopIteration异常来通知next(it)函数不再能提供数据
+
+生成器表达式：
+	语法：
+		(表达式 for 变量 in 可迭代对象 [if 真值表达式])
+	作用：
+		用推导式的形式生成一个新的生成器
+	示例：
+		gen = (x**2 for x in range(1, 4))
+		it = iter(gen)
+		next(it) # 1
+		next(it) # 2
+		next(it) # 9 
+		next(it) # StopIteration
+	优点：
+		不占内存空间
+
+列表推导式和生成器表达式的区别
+	l = [1, 2, 3, 4]
+	gen = (x for x in L)
+	lst = [x for x in L]
+	L[1] = 222 #改变原列表的第二个元素
+	for x in lst:
+		print(x)  1 2 3 4 #不变
+	for x in gen:
+		print(x)  1 222 3 4 #第二个数改变
+
+迭代工具函数：
+	迭代工具函数的作用是生成一个个性化的可迭代对象
+
+zip函数
+	zip(iter1[,iter2,iter3,...])返回一个zip对象，此对象用于生成一个元组，此元组的个数由最小的可迭代对象决定
+
+	enumerate(iterable[,start])生成带索引的枚举对象，返回迭代类型为索引-值对(index，value)，默认索引从0开始，也可以用start绑定
+
+示例：
+	numbers = [10086, 10000, 10010, 95588]
+	names = ['中国移动', '中国电信', '中国联通']
+	for n, a in zip(numbers, names):
+		print(a,'的客服号码是',n)
+
+enumerate函数(枚举函数)
+	格式:
+		enumerate(iterable[, start]) 
+	示例:
+		names = ['中国移动', '中国电信', '中国联通']
+		for x in enumerate(names):
+			print(x)
+
+
+
+字节串 bytes 和字节数组 bytearray
+
+字节串bytes
+	作用：
+		存储以字节为单位的数据
+	说明：
+		字节串是不可变的字节序列
+		字节是0-255之间的整数 
+
+创建空字节串的字面值：
+	b''
+	b""
+	b''''''
+	b""""""
+	B''
+	B""
+	B''''''
+	B""""""
+创建非空字节串的字面值：
+	b'ABCD'
+	b'\x41\x41'
+字节串的构造函数
+	bytes() 生成一个空的字节串，相当于b''
+	bytes(整型可迭代对象) 用可迭代对象初始化一个字节串
+	bytes(整数n) 生成n个值为零的字节串
+	bytes(字符串，encoding='utf-8')  
+	用字符串的转换编码生成一个字节串
+
+字节串的运算：
+	+ += * *=
+	< <= > >= == !=
+	in/not in
+	索引/切片
+示例：
+	b = b'abc' + b'123'  # b = b'abc123'
+	b += b'ABC' # b = b'abc123ABC'
+	b'abc' * 2 = b'abcabc'
+	b = b'ABC'
+	65 in b  # True
+	b'A' in b  # True
+	b[0]  # 65
+
+用于序列函数
+	len max min sum all any
+
+bytes 与 str 的区别
+	bytes 存储字节(0-255)
+	str 存储Unicode字符(0-65535)
+bytes 与str 的转换
+		编码(encode)
+	str -------------> bytes
+	    b = s.encode('utf-8')
+		  解码(ecode)
+	bytes -----------> str
+	    s = b.decode('utf-8') 
+
+字节数组 bytearray
+	可变的字节序列
+
+创建字节数组的构造函数：
+	bytearray() 创建空的字节数组
+	bytearray(整数) 
+	bytearray(整型可迭代对象) 
+	bytearray(字符串，encoding='utf-8') 
+	注：以上参数等同于字节串
+字节数组的运算：
+	+ += * *=
+	比较运算：
+	< <= > >= == !=
+	in / not in
+	索引/切片(字节数组支持索引和切片赋值，规则与列表相同)
+
+bytearray的方法：
+	B.clear() 清空字节数组
+	B.append(n) 追加一个字节(n为0-255的整数)
+	B.remove(value) 删除第一个出现的字符，如果没有出现，则产生ValueError错误
+	B.reverse() 字节的顺序进行反转
+	B.decode(encoding='utf-8') # 解码
+	B.find(sub[,start[,end]])  # 查找
+
+
+
+
+文件 file(day0523/code)
+	什么是文件
+		文件是数据存储的单位
+		文件通常用来长期存储数据
+		文件中的数据是以字节为单位进行顺序存储的
+文件的操作流程
+	1.打开文件
+	2.读写文件
+	3.关闭文件
+	任何的操作系统，一个应用程序同时打开文件的数量有最大数限制
+
+文件的打开函数open()
+	open(file, mode='rt')用于打开一个文件，返回此文件对应的文件流对象，如果打开失败，则会触发OSError错误
+
+文件的关闭方法
+	F.close() 关闭，释放系统资源
+
+python文件读写的类型有两种
+	文本文件(text file)
+	二进制文件(binary file)
+
+文本文件的操作
+	默认文件中存储的都为字符数据，以行为单位进行分隔，在python内部统一用'\n'作为换行进行分隔
+	对文本文件读写需要用字符串(str)进行数据读取和写入
+
+各种操作系统的换行符：
+	Linux:          '\n'
+	Windows:        '\r\n'
+	旧的Maccintosh: '\r'
+	旧的Mac Os:     '\n'
+
+文本文件的写操作
+	文档见：文件.html
+
+
+
+标准输入输出模块
+	模块名：sys
+	sys.stdin(默认为标准键盘输入设备)
+		ctrl + d 输入文件末尾标识
+	sys.stdout(默认为屏幕终端(标准输出))
+	sys.stderr(默认为屏幕终端(标准错误输出))
+	标准文件不需要打开和关闭就可以使用
+	示例：
+		import sys
+		s = sys.stdin.readline()
+		print(s)
+
+文件的操作方法：
+	F.close() 	关闭文件(关闭后文件不能再读写会发生ValueError错误)
+	F.readline() 	读取一行数据, 如果到达文件尾则返回空行
+	F.readlines(max_chars=-1) 	返回每行字符串的列表,max_chars为最大字符(或字节)数
+	F.writelines(lines) 	每行字符串的列表
+	F.flush() 	把写入文件对象的缓存内容写入到磁盘
+	F.read(size = -1) 	从一个文件流中最多读取size个字符
+	F.write(text) 	写一个字符串到文件流中，返回写入的字符数
+	二进制文件操作方法 	
+	F.tell() 	返回当前文件流的绝对位置
+	F.seek(offset, whence=0) 	改变数据流的位置，返回新的绝对位置
+	F.readable() 	判断这个文件是否可读,可读返回True,否则返回False
+	F.writable() 	判断这个文件是否可写,可写返回True,否则返回False
+	F.seekable() 	返回这个文件对象是否支持随机定位
+	F.truncate(pos = None) 	剪掉 自pos位置之后的数据，返回新的文件长度(字节为单位)
+二进制文件操作：
+	'b' 二进制(binary)文件操作
+	对于二进制文件读写通常需要用字节串(bytes)进行操作
+	示例：
+		f = open('info.txt', 'rb') #以二进制模式打开
+		# 在此处对f绑定的对象以bytes为单位进行读写
+		f.close()
+F.seek() 方法
+	F.seek(偏移量，when=相对位置)
+		偏移量：
+			大于0代表向文件末尾方向移动
+			小于0代表向文件头的方向移动
+		相对位置：
+			0代表从文件头开始偏移
+			1代表从当前位置 开始偏移
+			2代表从文件尾开始偏移
+	示例：
+		f = open('data.txt', 'rb')
+		f.seek(5,0) #相对于文件头向后移动5个字节
+		b = f.read(5)
+		print(b)
+		f.seek(-15,2)  #从文件尾往前移动15个字节
+		f.seek(3,1)    #从当前位置往后移动3个字节
+		f.close()
+
+
+
+一个汉字占的字节数：GBK：2；UTF-8:3
+
+汉字编码：
+	国标系列：(windows常用)
+		GB18030(二字节或四字节编码)
+			GBK(二字节编码)
+				GB2312(二字节编码)
+	国际标准：
+		UNICODE(16/32) <---> UTF-8
+			(Linux/Mac OS X/IOS/Android常用)
+
+python编码(encode)字符串
+	'gb2312'
+	'gbk'
+	'gb18030'
+	'utf-8'
+	'ascii'
+编码注释：
+	在源文件的第一行或第二行写入如下内容为编码注释
+	# -*- coding:gbk -*-
+	设置源文件编码为:gbk
+	# -*- coding:utf-8 -*-
+	设置源文件编码为:utf-8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
