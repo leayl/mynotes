@@ -1,0 +1,14 @@
+PIP镜像源配置（如果使用国外镜像源，速度会非常慢，使用国内的镜像源会快）
+
+	1.在C:\Users\你的账号\下创建，pip文件夹;
+	
+	2.pip文件夹下创建，pip.conf文件，并复制如下内容：
+	
+	
+	[global]
+	trusted-host=rnd-mirrors.huawei.com
+	index-url=http://rnd-mirrors.huawei.com/pypi/simple/
+	
+	来自 <http://3ms.huawei.com/km/blogs/details/5151985> 
+	
+	即可使用pip install xxx 进行安装python模块包
