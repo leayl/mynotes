@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'index.login_middleware.UserLoginMiddleware',
 ]
 
-ROOT_URLCONF = 'LibProcessCoustruction.urls'
+ROOT_URLCONF = 'MySite.urls'
 
 TEMPLATES = [
     {
@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'LibProcessCoustruction.wsgi.application'
+WSGI_APPLICATION = 'MySite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
