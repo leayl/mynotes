@@ -3,6 +3,8 @@
 """
 import random
 
+from 数据结构与算法小练习.线性表.link_list import LinkList
+
 
 class Node:
     def __init__(self, data):
@@ -108,13 +110,79 @@ class CircularLinkList:
         return ret
 
 
+def create_link_list_with_circle(L):
+    length_l = L.length
+    circle_node_num = random.randint(1, length_l)
+    print('设定环节点：', circle_node_num)
+    circle_node = L.head
+    i = 1
+    while i < circle_node_num:
+        circle_node = circle_node._next
+        i += 1
+    circle_node = circle_node._next
+    temp = L.head
+    while temp._next:
+        temp = temp._next
+    temp._next = circle_node
+    return L
+
+
+def if_link_with_circle(L):
+    """
+    :desc:判断链表是否带有环
+    :param L:
+    :return:
+    """
+    # 方法一：q一直往前走，p每次从头开始走，计算每次p走到q同等位置时，步数是否相同，一直相同则无环，反之则有
+    # q = L.head
+    # i = 0
+    # while q._next:
+    #     p = L.head
+    #     j = 0
+    #     while p._next:
+    #         if p == q:
+    #             if i == j:
+    #                 break
+    #             else:
+    #                 return j
+    #         else:
+    #             p = p._next
+    #             j += 1
+    #     q = q._next
+    #     i += 1
+    # return False
+    # 方法二：q,p 以不同速度向前，如果一直不碰到则无环，反之则有
+    q = L.head
+    p = L.head
+    i = 0
+    while p and q:
+        p = p._next
+        i += 1
+        if q._next:
+            q = q._next._next
+        else:
+            return False
+        if q == p:
+            return i
+    return False
+
+
 if __name__ == '__main__':
-    circular_link_list = CircularLinkList()
-    # 随机生成链表
-    for i in range(1, 42):
-        circular_link_list.append(i)
-    print(circular_link_list)
+    # circular_link_list = CircularLinkList()
+    # # 随机生成链表
+    # for i in range(1, 42):
+    #     circular_link_list.append(i)
+    # print(circular_link_list)
     # circular_link_list.append(4)
     # circular_link_list.add(455)
     # circular_link_list.insert(4, 555)
     # circular_link_list.remove(555)
+    link_list = LinkList()
+    # 随机生成链表
+    for i in range(19):
+        node = Node(random.randint(1, 50))
+        link_list.append(node)
+    print(link_list)
+    print(if_link_with_circle(link_list))
+    link_list = create_link_list_with_circle(link_list)
+    print(if_link_with_circle(link_list))
