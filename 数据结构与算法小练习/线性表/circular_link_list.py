@@ -110,6 +110,7 @@ class CircularLinkList:
         return ret
 
 
+
 def create_link_list_with_circle(L):
     length_l = L.length
     circle_node_num = random.randint(1, length_l)
