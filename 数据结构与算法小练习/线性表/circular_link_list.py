@@ -167,6 +167,63 @@ def if_link_with_circle(L):
     return False
 
 
+def magician_card():
+    """
+    魔术师发牌问题
+    第一个为1
+    每发一次牌，放到桌子上
+    发第n张牌，从手里从1开始数，每数一张忘手中下面放，直到数到n，发出手中的牌
+    发到桌子上的牌要从1开始连续
+    :return:
+    """
+    l = CircularLinkList()
+
+    for i in range(1, 14):
+        l.append(0)
+
+    temp = l.head
+    temp.data = 1
+    card_num = 2
+    while True:
+        j = 0
+        while j < card_num:
+            temp = temp._next
+            j += 1
+            if temp.data != 0:
+                j -= 1
+
+        if temp.data == 0:
+            temp.data = card_num
+            card_num += 1
+        if card_num == 14:
+            break
+    return l
+
+
+def latin_square(n):
+    """
+    拉丁方阵:
+    如下为3x3方阵
+    1 2 3
+    2 3 1
+    3 2 1
+    """
+    # 生成长度为n的循环链表
+    l = CircularLinkList()
+    for i in range(1, n + 1):
+        l.append(i)
+    # 新行的头一个元素
+    temp1 = l.head
+    for j in range(1, n + 1):
+        # 新行开始元素为temp1
+        temp2 = temp1
+        for k in range(n):
+            print(temp2.data, end=' ')
+            temp2 = temp2._next
+        print()
+        temp1 = temp1._next
+
+
 if __name__ == '__main__':
     # circular_link_list = CircularLinkList()
     # # 随机生成链表
@@ -177,12 +234,17 @@ if __name__ == '__main__':
     # circular_link_list.add(455)
     # circular_link_list.insert(4, 555)
     # circular_link_list.remove(555)
-    link_list = LinkList()
-    # 随机生成链表
-    for i in range(19):
-        node = Node(random.randint(1, 50))
-        link_list.append(node)
-    print(link_list)
-    print(if_link_with_circle(link_list))
-    link_list = create_link_list_with_circle(link_list)
-    print(if_link_with_circle(link_list))
+
+    # link_list = LinkList()
+    # # 随机生成链表
+    # for i in range(19):
+    #     node = Node(random.randint(1, 50))
+    #     link_list.append(node)
+    # print(link_list)
+    # print(if_link_with_circle(link_list))
+    # link_list = create_link_list_with_circle(link_list)
+    # print(if_link_with_circle(link_list))
+
+    # l = magician_card()
+    # print(l)
+    latin_square(9)
