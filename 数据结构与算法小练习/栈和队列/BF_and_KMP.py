@@ -38,37 +38,24 @@ def get_kmp_next_lis(sour_str):
     获取模式串中每个位置匹配失败后应该去匹配目标串当前位置的模式串位置
     :param sour_str: 模式串
     """
-    ret_lis = [0] * len(sour_str)
+    print(sour_str)
+    ret_lis = [-1] * len(sour_str)
+    ret_lis[1] = 0
     pre_index = 0  # 前缀位置
     suf_index = 1  # 后缀位置
-    while suf_index < len(sour_str):
-        if sour_str[pre_index] == sour_str[suf_index]:
-            ret_lis[suf_index] = pre_index + 1
+    # 由于配对成功后索引是先增加1再记录next的，这里在索引为：字符长度-1（最后一个位置）时，已经记录了最后一个的值
+    while suf_index < len(sour_str) - 1:
+        if pre_index == -1 or sour_str[suf_index] == sour_str[pre_index]:
             pre_index += 1
             suf_index += 1
-        elif pre_index != 0:
-            pre_index = ret_lis[pre_index - 1]
-        elif pre_index == 0:
-            ret_lis[suf_index] = 0
-            suf_index += 1
-
+            ret_lis[suf_index] = pre_index
+        else:
+            # 匹配失败后，前缀的起始匹配位置往前走，注意了，脑子里的图形中，下面的是前缀，所以移动的是前缀啊！！！
+            pre_index = ret_lis[pre_index]
     return ret_lis
 
 
 def kmp(tar_str, sour_str):
-    def get_kmp_next_lis(s):
-        ret_lis = [0] * len(s)
-        i = 0
-        j = 1
-        while j < len(s):
-            if s[i] == s[j]:
-                ret_lis[j] = i + 1
-            elif i != 0:
-                pass
-            else:
-                i += 1
-                ret_lis[i] = 0
-
     next_lis = get_kmp_next_lis(sour_str)
     print(next_lis)
     tar_index = sour_index = 0
@@ -94,3 +81,4 @@ if __name__ == '__main__':
     t = 'abaacabacaca'
     s = 'acaca'
     print(kmp(t, s))
+
