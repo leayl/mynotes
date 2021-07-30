@@ -1,0 +1,4 @@
+1、下载Apache24后，如果报不支持TLSv1.3的错误，则打开“Apache24\conf\extra\httpd-ahssl.conf”文件，找到
+“#<IfDefine ENABLE_TLS13>
+ #  SSLProtocol -all +TLSv1.2 +TLSv1.3
+”，删除后面的“+TLSv1.3".
