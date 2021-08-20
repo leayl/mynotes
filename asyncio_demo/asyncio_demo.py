@@ -20,7 +20,7 @@ for task in tasks:
     # 添加完成后的回调函数，任务将作为参数传入，任务返回的结果可通过task.result()获取到
     task.add_done_callback(call_back)
 
-# 将任务列表转化称协程对象，控制多任务运行
+# 将任务列表转化称协程对象，控制多任务运行，不按顺序来
 wait_tasks = asyncio.wait(tasks)
 # 开始执行任务直到完成
 loop.run_until_complete(wait_tasks)
