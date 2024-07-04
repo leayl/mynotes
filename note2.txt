@@ -842,7 +842,7 @@ pyc模块的编译文件
 	R.shuffle(seq[, random]) 	随机指定序列的顺序(乱序序列）
 	R.sample(seq,n) 	从序列中选择n个随机且不重复的元素
 	R.getrandbits(nbit) 	以长整型的形式返回用nbit位来表示的随机数
-	R.seed(a=None) 	用给定的数a设置随机种子,不给参数a则用当前时间设置随机种子
+	R.seed(a=None) 	用给定的数a设置随机种子,如果a值不变,则每次运行程序时得到的随机结果都相同,不给参数a则用当前时间设置随机种子
 
 包(模块包) package
 	包是将模块以文件夹的组织形式进行分组管理的方法
@@ -909,7 +909,7 @@ pyc模块的编译文件
 		def play():
 			print('玩contra')
 		print('contra模块被加载')
-		def gameoer():
+		def gameover():
 			from ..menu import show_menu  #相对导入
 			show_menu()
 
@@ -919,7 +919,7 @@ pyc模块的编译文件
 包的加载路径
 	同模块的加载路径相同
 		1.当前文件夹
-		2.sys.path给出的路径 
+		2.sys.path给出的路径
 
 
 
@@ -1225,7 +1225,7 @@ bytes 与str 的转换
 		编码(encode)
 	str -------------> bytes
 	    b = s.encode('utf-8')
-		  解码(ecode)
+		  解码(decode)
 	bytes -----------> str
 	    s = b.decode('utf-8') 
 
