@@ -56,7 +56,7 @@ class	object    instance
 					'''实例方法的文档字符串'''
 					语句块
 		作用：
-			用于描述一个对象的行为，为此类型的全部对象都拥有形同的行为
+			用于描述一个对象的行为，为此类型的全部对象都拥有相同的行为
 		说明：
 			实例方法是是指函数，是定义在类内的函数
 			实例方法至少有一个形参，第一个形参代表调用这个方法的示例，
@@ -73,11 +73,11 @@ class	object    instance
 		    def sleep(self,hour):
 		        '''此方法用来描述小狗睡觉的行为'''
 		        print('小狗睡了：',hour,'小时')
-		    def play(self,distence):
+		    def play(self,distance):
 		        '''此方法用来描述小狗玩球的行为'''
-		        for i in range(distence):
+                import time
+		        for i in range(distance):
 		            print(' '* i+'o',end = '\r')
-		            import time
 		            time.sleep(0.5)
 		# 创建dog类的实例
 		dog1 = dog()
@@ -107,13 +107,13 @@ class	object    instance
 		print(dog1.color,'的',dog1.kinds)
 		dog2 = dog()
 		# 该对象没有相应属性
-		    print(dog2.color,'的',dog2.kinds)
+		    print(dog2.color,'的',dog2.kinds) #属性错误AttributeError
 		# 添加属性后即可使用
 		dog2.kinds = '牧羊犬' #添加属性kinds
 		dog2.color = '黄色'   #添加属性color
 
 		删除属性：
-			用del语句可以删除一个兑现的实例变量
+			用del语句可以删除一个对象的实例变量
 
 			语法：
 				del 对象.实例变量名
@@ -125,7 +125,7 @@ class	object    instance
 				c1.color = '白色'  #添加属性
 				print(c1.color)   
 				del c1.color       #删除属性
-				print(c1.color)	   #属性错误
+				print(c1.color)	   #属性错误AttributeError
 
 初始化方法
 	作用：
@@ -138,7 +138,7 @@ class	object    instance
 		1.初始化方法名必须为__init__不可改变
 		2.初始化方法会在构造函数创建实例后自动调用，且将实例自身通过
 		  第一个参数self传入__init__方法
-		3.构造函数的实参将通过__init__方法 的形参列表传入__init__方法中
+		3.构造函数的实参将通过__init__方法的形参列表传入__init__方法中
 		4.初始化方法内部如果需要返回则只能返回None
 
 析构方法(python不建议在析构方法内做任何事情，因为对象销毁的时间难以确定)
@@ -302,8 +302,9 @@ print(car.count)
 	示例：
 		class student:
 			"""docstring for student"""
+            __slots__ = ['name', 'score'] #防止错写属性名
+
 			def __init__(self, name, score):
-				__slots__ = ['name', 'score'] #防止错写属性名
 				self.name = name
 				self.score = score
 
@@ -329,17 +330,17 @@ print(car.count)
 		        第一个参数为cls，代表调用此方法的类'''
 		        return cls.count
 		    @classmethod
-		    def updatecount(cls, number):
+		    def updateCount(cls, number):
 		        cls.count += number
 
 		print(car.getTotalCount())   #0
 		# car.count += 1  #面向对象思想不提倡直接操作属性
-		car.updatecount(1)
+		car.updateCount(1)
 		print(car.getTotalCount())   #1
 		c1 = car()     #创建一个对象
-		c1.updatecount(10)    #car类的实例可以访问类方法
+		c1.updateCount(10)    #car类的实例可以访问类方法
 		print(c1.getTotalCount())    #11
-		c1.count = 100  #创建实例方法
+		c1.count = 100  #创建实例属性
 		print(c1.getTotalCount())   #11,类方法只能访问类变量，
 		                            #不能访问实例属性(变量)
 
@@ -367,7 +368,7 @@ print(car.count)
 继承和派生的名词：
 	父类：基类(base class) 超类(super class) 父类(father class)
 
-	子类：派生类(derived class) / 基类(child class)
+	子类：派生类(derived class) / 子类(child class)
 
 单继承：
 	语法：
@@ -428,7 +429,7 @@ print(car.count)
 super 函数
 	1.super(type, obj) 返回绑定超类的实例
 	2.super() 返回绑定超类的实例，等同于:
-		super(__class__,实例方法的第一个参数)(必须在方法内调用)
+		super(__class__,实例方法的第一个参数,一般是self)(必须在方法内调用)
 
 
 
@@ -487,7 +488,7 @@ super 函数
 
 多态 polymorphic
 	字面意思：'多种状态'
-	多态是指在继承/派生关系的类中，盗用基类对象的方法，实际能调用子类的
+	多态是指在继承/派生关系的类中，调用基类对象的方法，实际能调用子类的
 	覆盖版本方法的现象叫多态
 
 说明：
@@ -560,29 +561,28 @@ my_draw(s2)  #调用point里的draw89
 	print(D.__mro__) #D B C A objict
 	d.m()
 
-################这里很复杂####################
-	class A:
+################这里很复杂(24.07.05才看懂，泪目o(╥﹏╥)o)####################
+class A:
     def m(self):
         print('A.m()被调用')
 
-	class B(A):
-	    def m(self):
-	        print('B.m()被调用')
-	        super().m()  
+class B(A):
+    def m(self):
+        print('B.m()被调用')
+        super().m()
 
-	class C(A):
-	    def m(self):
-	        print('C.m()被调用')
+class C(A):
+    def m(self):
+        print('C.m()被调用')
 
-	class D(B,C):
-	    # pass
-	    def m(self):
-	        print('D.m()被调用')
-	        super().m()  
+class D(B,C):
+    def m(self):
+        print('D.m()被调用')
+        super().m()
 
-	d = D()
-	print(D.__mro__) #D B C A objict
-	d.m()  # D B C的m方法都被调用,super函数调用顺序遵循__mro__的顺序
+d = D()
+print(D.__mro__) #D B C A objict
+d.m()  # D B C的m方法都被调用,super函数调用顺序遵循__mro__的顺序,即使在B在前且B中也调用了super,不会直接跳过C去调用B的父类A，且因为C中没有调用super，所以A不会被调用
 
 函数重写 override
 	重写是在定义的类内添加相应的方法，让自定义的类生成的对象(实例)像
@@ -591,7 +591,7 @@ my_draw(s2)  #调用point里的draw89
 对象转字符串函数重写
 	repr(obj) 返回一个能代表此对象的表达式字符串，通常：
 		eval(repr(obj)) == obj
-	str(obj) 通过给定的对象返回一个字符串(这个字符串通常是给惹人看的)
+	str(obj) 通过给定的对象返回一个字符串(这个字符串通常是给人看的)
 对象转字符串函数重写的方法：
 	repr() 函数的重写方法：
 		def __repr__(self):
@@ -737,7 +737,7 @@ with 语句
 		with 表达式1 [as 变量1], 表达式2 [as 变量2]:
 			语句块
 	作用：
-		使用与对资源进行访问的场合，确保使用过程中不管是否发生异常，
+		使用于对资源进行访问的场合，确保使用过程中不管是否发生异常，
 		都会执行必须的'清理'操作，并释放资源
 			如：文件使用后自动关闭，线程中锁的自动获取和释放
 	说明：
@@ -795,7 +795,7 @@ delattr(obj, name) 	删除对象obj中的name属性,
 
 运算符重载
 	什么是运算符重载
-		让自定义的类生成的对象(实例)能够使用云悬浮进行操作
+		让自定义的类生成的对象(实例)能够使用运算符进行操作
 	作用：
 		1.让自定义的类的实例像内建的对象一样进行运算符操作
 		2.让程序简洁易读
