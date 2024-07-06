@@ -1,6 +1,7 @@
 import random
 import sys
 import time
+from typing import List, Set
 
 
 def fun(*, a=1, b=1, c=1):
@@ -67,7 +68,7 @@ class D(B, C):
 
 
 class MyInt:
-    def __init__(self, n:int):
+    def __init__(self, n: int):
         self.data = n
 
     def __repr__(self):
@@ -77,13 +78,72 @@ class MyInt:
         return int(self.data)
 
 
+# 展开嵌套列表
+def expand_list(l: list, out_l=None):
+    if out_l is None:
+        out_l = []
+    for i in l:
+        if isinstance(i, list):
+            expand_list(i, out_l)
+        else:
+            out_l.append(i)
+    return out_l
+
+
+# 一个球从100米高空落下，每次落下后反弹高度是原高度的一半
+# #     1)算出皮球在第10次落下后反弹的高度是多少
+# #     2)打印出球共经历了多少米的路程
+def ball_height(times: int):
+    if times == 1:
+        return 100 * 0.5
+    return ball_height(times - 1) * 0.5
+
+
+def ball_path(times: int):
+    if times == 1:
+        return 100 * 1.5
+    return ball_path(times - 1) + ball_height(times - 1) * 1.5
+
+
+# 分解质因数
+# 判断是否质数
+def is_prime(n: int) -> bool:
+    if n < 2:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+
+# 分解质因数
+def prime_factors(n: int, l: List[int]):
+    if is_prime(n):
+        l.append(n)
+        return
+    for i in range(2, n):
+        if n % i == 0:
+            # 这里使用return是因为避免重复查找，如6=2*3,i = 2找到后会递归查找n // i(即3)，return后不会再继续循环到i=3，避免重复
+            return prime_factors(i, l), prime_factors(n // i, l),
+
+
 if __name__ == '__main__':
-    a = MyInt(10)
-    b = int(a)
-    print(type(a))
-    print(str(a))
-    print(b)
-    print(type(b))
+    n = 100
+    l = []
+    prime_factors(n, l)
+    print(l)
+
+    # ball_times = 2
+    # print(ball_height(ball_times))
+    # print(ball_path(ball_times))
+    # l = [[1, 2, 3], 4, [5, 6, [7, 8, [9]]]]
+    # print(expand_list(l))
+    # a = MyInt(10)
+    # b = int(a)
+    # print(type(a))
+    # print(str(a))
+    # print(b)
+    # print(type(b))
     # # 查看MRO
     # print(D.mro())
     # # d = D()
