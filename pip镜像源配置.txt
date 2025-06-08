@@ -4,10 +4,10 @@ PIP镜像源配置（如果使用国外镜像源，速度会非常慢，使用�
 	
 	2.pip文件夹下创建，pip.conf文件，并复制如下内容：
 	
-	
 	[global]
-	trusted-host=rnd-mirrors.huawei.com
-	index-url=http://rnd-mirrors.huawei.com/pypi/simple/
+    index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+    [install]
+    trusted-host = pypi.tuna.tsinghua.edu.cn
 	
 	来自 <http://3ms.huawei.com/km/blogs/details/5151985> 
 	
