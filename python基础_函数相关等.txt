@@ -262,8 +262,8 @@ globals 和 locals函数
 		fx(f1) #<function f1 at 0x7febd606cf28>
 		       #hello
 
-		fx(f2) #<function f1 at 0x7febd606cf28>
-		       #hello
+		fx(f2) #<function f2 at 0x7febd606cf29>
+		       #world
 	示例2：
 		def fx(a,fn):
     		return fn(a)
@@ -503,10 +503,10 @@ eval()和exec()的两个参数globals和locals
 	控制递归的示例：
 		def fx(n):
 			print('递归进入第%d层' % n)
-			if n == 3：                  
+			if n == 3:
 				return
 			fx(n + 1)
-			print('递归结束')
+			print('递归退出第%d层' % n)
 		fx(1)
 		print('程序结束')    #递归进入第1层
 							 #递归进入第2层
@@ -632,13 +632,6 @@ def f(n, lst=None):
 	lst.append(n)
 	print(lst)
 
-
-
-
-
-
-
-
 模块 Moudule
 	什么是模块：
 		模块是一个包含有一系列数据，函数，类等组成的程序组
@@ -706,8 +699,6 @@ dir函数：
 		time.sleep(10)
 		print('程序结束')
 
- 
-
  系统模块sys
  	此模块全部是运行时系统相关的信息
  	见yl/day0518/code/1_sys.py
@@ -730,9 +721,6 @@ dir函数：
 	sys.exit([arg]) 	退出程序，正常退出时sys.exit(0)
 	sys.getrecursionlimit() 	得到递归嵌套层次限制（栈的深度）
 	sys.setrecursionlimit(n) 	得到和修改递归嵌套层次限制（栈的深度）
-
-
-
 
 自定义模块
 	示例见yl/day1508/code/mymod1.py #用户自定义模块
@@ -810,9 +798,9 @@ pyc模块的编译文件
 模块的__all__列表
 	模块中的__all__列表是一个用来存放可导出属性的字符串列表
 	作用：
-		当用from import*语句导入时，只导入__all__列表内的属性
+		当用from import *语句导入时，只导入__all__列表内的属性
 	示例：
-	__all__=['f1','f2']  #限制用from import*时只导入f1,f2
+	__all__=['f1','f2']  #限制用from import *时只导入f1,f2
 	def f1():
 		pass
 	def f2():
@@ -823,13 +811,6 @@ pyc模块的编译文件
 模块的隐藏属性
 	模块中以'_'开头的属性，在form import *
 	语句导入时，将不被导入，通常称这些属性为隐藏属性
-
-
-
-
-
-
-
 
 随机模块 random
 	作用：
@@ -872,9 +853,9 @@ pyc模块的编译文件
 			在__init__.py内可以加载此包所依赖的以下其他模块
 	__init__.py内的__all__列表
 	作用：
-		用来记录此包有哪些子包或模块在用from 包 import*语句导入时是否被调导入
+		用来记录此包有哪些子包或模块在用from 包 import *语句导入时是否被调导入
 	说明：
-		__all__列表只对from import*语句起作用
+		__all__列表只对from import *语句起作用
 
 包的导入：
 	用三条import语句可以导入包(同模块的导入规则)
@@ -889,9 +870,6 @@ pyc模块的编译文件
 
 	from 包名 import *
 	from 包名.模块名  import *
-
-
-
 
 包的相对导入
 	包的相对导入是指包内模块的相互导入
@@ -920,15 +898,6 @@ pyc模块的编译文件
 	同模块的加载路径相同
 		1.当前文件夹
 		2.sys.path给出的路径
-
-
-
-
-
-
-
-
-
 
 
 异常 exception
@@ -1055,14 +1024,6 @@ assert语句(断言语句)
 	在程序调用层数较深时，向主调函数传递错误信息需要用return语句层层传递比较麻烦那，所以用异常处理机制
 
 
-
-
-
-
-
-
-
-
 迭代器 iterator和生成器 generator
 
 什么是迭代器
@@ -1071,7 +1032,7 @@ assert语句(断言语句)
 
 迭代器函数
 	iter(iterable)从可迭代对象中返回一个迭代器，iterable必须是一个能够提供迭代器的可迭代对象
-	next(iterable)从迭代器itreator中获取下一条记录，如果无法获取下一条记录，则触发StopIteration异常
+	next(iterable)从迭代器iterator中获取下一条记录，如果无法获取下一条记录，则触发StopIteration异常
 
 说明：
 	迭代器是访问可迭代对象的一种方式
@@ -1252,9 +1213,6 @@ bytearray的方法：
 	B.reverse() 字节的顺序进行反转
 	B.decode(encoding='utf-8') # 解码
 	B.find(sub[,start[,end]])  # 查找
-
-
-
 
 文件 file(day0523/code)
 	什么是文件

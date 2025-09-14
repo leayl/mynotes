@@ -1,0 +1,47 @@
+一、Linux下
+	首先：sudo su postgres进入postgres用户，然后再进行以下操作
+	1、查看版本：psql --version
+	2、查看当前据库：psql -l
+	3、创建数据库：createdb 数据库名
+	4、进入数据库命令行模式，同时打开数据库：psql 数据库名
+	5、系统命令删除数据库：dropdb 数据库名
+	
+	数据库命令行：
+	如：进入lea数据库：psql lea
+	显示如下：
+	psql (10.12 (Ubuntu 10.12-0ubuntu0.18.04.1))
+	Type "help" for help.
+
+	lea=# 
+	** psql为系统命令，psql 数据库名 打开后的才是数据库命令行
+	1、help，查看帮助
+		lea=# help
+		You are using psql, the command-line interface to PostgreSQL.
+		Type:  \copyright for distribution terms
+			   \h for help with SQL commands
+			   \? for help with psql commands
+			   \g or terminate with semicolon to execute query
+			   \q to quit
+   2、\h：查看数据库命令行帮助
+   3、\?：查看psql帮助
+   4、\q：离开数据库命令行
+	
+二、正式内容
+	基本前置操作：
+	1、进入postgres用户：$ sudo su postgres
+	2、创建数据库：$ createdb leadb
+	3、一览数据库：$ psql -l
+	4、切换至数据库命令行模式，并切换至指定数据库：$ psql leadb
+	
+	postgreql操作：
+	1、创建表：create table 表名 (字段名 字段类型(字段限制),xxx );
+		create artical (title varchar(255), content text);
+	2、查看所有表：\dt
+	3、查看指定表结构：\d 表名
+		\d artical
+	4、修改表名：alter table 表名  rename to 新表名;
+		alter table artical rename to new_artical;
+	5、导入sql文件：\i sql文件
+		\i db.sql
+	6、删除表：drop table 表名;
+		drop table new_artical;
